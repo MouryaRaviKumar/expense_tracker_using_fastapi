@@ -34,5 +34,5 @@ def update_Record(id : int):
 @router.delete("/id",status_code=200)
 def delete_Record(id : int):
     return{
-        "message" : "Record with id : {id} is deleted"
+        "message" : f"Record with id : {id} is deleted"
     }
