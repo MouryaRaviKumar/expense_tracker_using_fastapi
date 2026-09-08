@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-router = APIRouter(prefix="/expense")
+router = APIRouter(prefix="/expense",tags=["Expense"])
 
 # Creating a Expense record
 @router.post("/",status_code=201)

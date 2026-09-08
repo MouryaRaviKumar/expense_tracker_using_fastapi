@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from schemas.expenseSchemas import MessageResponse
+from schemas.expenseSchema import MessageResponse
 from utils.database import *
 import utils.database as database
-from routes.expenseRoutes import router as expenseRouter
+from routes import tripRoutes, expenseRoutes
 
 @asynccontextmanager
 async def lifespan(app : FastAPI):
@@ -25,4 +25,5 @@ def health():
         "message":"Application Working Successfully"
     }
 
-app.include_router(expenseRouter)
+app.include_router(tripRoutes.router)
+app.include_router(expenseRoutes.router)
