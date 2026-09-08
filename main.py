@@ -7,15 +7,15 @@ from routes import tripRoutes, expenseRoutes
 
 @asynccontextmanager
 async def lifespan(app : FastAPI):
-    print("Starting Server")
-    print("Connecting to Database")
+    print("------------ Starting Server ------------")
+    print("------- Connecting to Database ----------")
     database.connect()
-    print("Connected to Database")
+    print("--------- Database Connected ------------")
     yield
-    print("Disconnecting to Databse")
+    print("--------- Disconnecting from Database --------")
     database.disconnect()
-    print("Database Disconnected")
-    print("Shutting Down Server")
+    print("------------ Database Disconnected -----------")
+    print("------------ Shutting Down Server ------------")
 
 app = FastAPI(lifespan=lifespan)
 
