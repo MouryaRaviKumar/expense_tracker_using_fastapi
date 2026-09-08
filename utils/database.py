@@ -1,6 +1,6 @@
 from pymongo import MongoClient, ASCENDING
 from pymongo.collection import Collection
-from config import settings
+from utils.config import settings
 
 _client: MongoClient | None = None
 
