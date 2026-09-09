@@ -1,38 +1,45 @@
 from fastapi import APIRouter
+from utils.database import get_collection
 
-router = APIRouter(prefix="/expense",tags=["Expense"])
+from services.expenseServices import ( 
+        createExpense, 
+        getAllExpensesOfTrip, 
+        getExpenseById, 
+        updateExpenseById, 
+        deleteExpenseById
+    )
+
+from schemas.expenseSchema import (
+    MessageResponse,
+    CreateExpense,
+    UpdateExpense,
+    ExpenseResponse
+)
+expenses = get_collection("expenses")
+
+router = APIRouter(prefix="/expenses",tags=["Expense"])
 
 # Creating a Expense record
-@router.post("/",status_code=201)
-def create_Expense_Record():
-    return{
-        "message" : "Expense Record created successfully"
-    }
+@router.post("/",response_model=ExpenseResponse, status_code=201)
+def create_Expense_Record(expense: CreateExpense):
+    return createExpense(expense)
 
 # Getting all the expense records
-@router.get("/",status_code=200)
-def retrieve_All_Records():
-    return{
-        "message" : "All Expense Records are Retrieved"
-    }
+@router.get("/trip/{trip_id}", response_model=list[ExpenseResponse], status_code=200)
+def retrieve_All_Records(trip_id: int):
+    return getAllExpensesOfTrip(trip_id)
 
 # Getting a particular expense record
-@router.get("/{id}",status_code=200)
-def record_By_Id(id : int):
-    return{
-        "message" : f"Record with id : {id} is retrieved"
-    }
+@router.get("/{id}", response_model=ExpenseResponse, status_code=200)
+def record_By_Id(id: str):
+    return getExpenseById(id)
 
 # Updating a particular record
-@router.put("/id",status_code=200)
-def update_Record(id : int):
-    return{
-        "message":f"Record with id : {id} is updated"
-    }
+@router.put("/{id}", response_model=ExpenseResponse, status_code=200)
+def update_Record(id: str, expense: UpdateExpense):
+    return updateExpenseById(id, expense)
 
 # Deleting a particular record
-@router.delete("/id",status_code=200)
-def delete_Record(id : int):
-    return{
-        "message" : f"Record with id : {id} is deleted"
-    }
+@router.delete("/{id}",response_model=MessageResponse,status_code=200)
+def delete_Record(id: str):
+    return deleteExpenseById(id)

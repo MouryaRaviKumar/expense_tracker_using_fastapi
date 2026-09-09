@@ -51,4 +51,6 @@ class UpdateTrip(BaseModel):
 
 class TripResponse(TripBase):
     id: str
-    
+
+class MessageResponse(BaseModel):
+    message: str
